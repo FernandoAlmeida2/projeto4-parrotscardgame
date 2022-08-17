@@ -2,6 +2,8 @@ let contadorDeCartas = 0;
 let cartasNum = -1;
 let arrayParrot = ['bobrossparrot', 'explodyparrot', 'fiestaparrot', 'metalparrot', 'revertitparrot',
  'tripletsparrot', 'unicornparrot'];
+let cartaViradaAnterior = null;
+
 
 //Pede o número de cartas via prompt
 let contadorPrompt = 1;
@@ -38,15 +40,36 @@ function comparador() {
 function viraCarta(cartaClicada){
     faceFrente = cartaClicada.children[0];
     faceVerso = cartaClicada.children[1];
-    faceFrente.classList.toggle('flip');
-    faceVerso.classList.toggle('flip');
+    if(faceFrente.classList.contains('flip') == false){
+        faceFrente.classList.add('flip');
+        faceVerso.classList.remove('flip');
+
+        //Quando duas cartas foram viradas no turno, verifica se elas são iguais: se sim, deixa-as viradas;
+        //caso contrário, desvira-as para a posição inicial;
+        console.log(cartaViradaAnterior);
+        if(cartaViradaAnterior != null){
+            if (cartaClicada.isEqualNode(cartaViradaAnterior) == false){
+                const faceFrenteAnterior = cartaViradaAnterior.children[0];
+                const faceVersoAnterior = cartaViradaAnterior.children[1];
+                setTimeout(function(){ 
+                faceFrenteAnterior.classList.remove('flip');
+                faceVersoAnterior.classList.add('flip');
+                faceFrente.classList.remove('flip');
+                faceVerso.classList.add('flip');
+                }, 1000);
+            }
+            cartaViradaAnterior = null;
+        }
+        else
+            cartaViradaAnterior = cartaClicada;
+    }
 
 }
 
 function CriaCarta (figura){
     div_Cartas = document.querySelector('.cartas');
     div_Cartas.innerHTML += 
-    `<div class="carta carta${contadorDeCartas + 1}" onclick = "viraCarta(this)">
+    `<div class="carta carta-${figura}" onclick = "viraCarta(this)">
         <div class="face frente">
             <img src="./imagens/front.png" alt="Não foi possível carregar a imagem"/>
         </div>
