@@ -3,6 +3,8 @@ let cartasNum = -1;
 let arrayParrot = ['bobrossparrot', 'explodyparrot', 'fiestaparrot', 'metalparrot', 'revertitparrot',
  'tripletsparrot', 'unicornparrot'];
 let cartaViradaAnterior = null;
+let cartasCertasViradas = 0;
+let numJogadas = 0;
 
 
 //Pede o número de cartas via prompt
@@ -43,7 +45,7 @@ function viraCarta(cartaClicada){
     if(faceFrente.classList.contains('flip') == false){
         faceFrente.classList.add('flip');
         faceVerso.classList.remove('flip');
-
+        numJogadas ++;
         //Quando duas cartas foram viradas no turno, verifica se elas são iguais: se sim, deixa-as viradas;
         //caso contrário, desvira-as para a posição inicial;
         console.log(cartaViradaAnterior);
@@ -57,6 +59,14 @@ function viraCarta(cartaClicada){
                 faceFrente.classList.remove('flip');
                 faceVerso.classList.add('flip');
                 }, 1000);
+            }
+            else{
+                cartasCertasViradas += 2;
+                if (cartasCertasViradas == cartasNum){
+                    setTimeout(function(){ 
+                        alert(`Você ganhou em ${numJogadas} jogadas!`);
+                        }, 1000);
+                }
             }
             cartaViradaAnterior = null;
         }

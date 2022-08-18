@@ -13,9 +13,13 @@ body{
 
 .topo{
     margin-top: 40px;
-    color: #75B79E;
-    font-weight: 700;
+}
+
+.topo h1{
     font-size: 56px;
+    font-weight: 700;
+    color: #75B79E;
+    
 }
 
 .cartas{
@@ -56,4 +60,32 @@ body{
 
 .flip{
     transform: rotateY(-180deg);
+}
+
+
+@media (max-width: 872px){
+    
+    .container{
+        width: 100vw;
+    }
+    
+    .topo{
+        width: 80vw;
+        font-size: 36px;
+    }
+
+    .topo h1{
+        font-size: 36px;
+        text-align: center;
+    }
+
+    .cartas{
+        width: 80vw;
+        margin-top: 40px;
+    }
+
+    .carta{
+        margin: 0 20px 20px 20px;
+    }
+   
 }
