@@ -147,6 +147,7 @@ body{
         width: 18vw;
         height: 12vw;
         border-radius: 8vw;
+        z-index: 2;
     }
     
     .relogio h2{
@@ -166,6 +167,7 @@ body{
         width: 14vw;
         height: 8vw;
         border-radius: 6vw;
+        z-index: 2;
         
     }
 
