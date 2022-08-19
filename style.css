@@ -103,7 +103,7 @@ body{
     padding: 5px;
     box-sizing: border-box;
     box-shadow: inset 0 0 1.5em gold;
-    position: absolute;
+    position: fixed;
     z-index: 2;
     border: 1px groove gold;
     border-radius: 30px;
@@ -149,6 +149,7 @@ body{
         width: 18vw;
         height: 12vw;
         border-radius: 8vw;
+        right: 0;
     }
     
     .relogio h2{
@@ -168,6 +169,7 @@ body{
         width: 14vw;
         height: 8vw;
         border-radius: 6vw;
+        right: 0;
         
     }
 
