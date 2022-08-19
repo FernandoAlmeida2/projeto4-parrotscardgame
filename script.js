@@ -1,5 +1,4 @@
-let contadorDeCartas = 0;
-let cartasNum = -1;
+let cartasNum = 0;
 let arrayParrot = ['bobrossparrot', 'explodyparrot', 'fiestaparrot', 'metalparrot', 'revertitparrot',
  'tripletsparrot', 'unicornparrot'];
 let cartaViradaAnterior = null;
@@ -21,8 +20,17 @@ function atualiza_Relogio(){
     conta_Segundos++;
 }
 
-function para_relogio(){
+function liga_Relogio(){
+    meu_Intervalo = setInterval(atualiza_Relogio, 1000);
+}
+
+function para_Relogio(){
     clearInterval(meu_Intervalo);
+}
+
+function reseta_Relogio(){
+    const contador_Relogio = document.querySelector('.relogio').lastElementChild;
+    contador_Relogio.innerHTML = '';
 }
 
 function CriaCarta (figura){
@@ -36,8 +44,8 @@ function CriaCarta (figura){
             <img src="./imagens/${figura}.gif" alt="Não foi possível carregar a imagem"/>
         </div>
     </div>`;
-    contadorDeCartas++;
 }
+
 
 function iniciaJogo(){
     //Pede o número de cartas via prompt
@@ -53,7 +61,6 @@ function iniciaJogo(){
         contadorPrompt++;
     }
 
-
     //Cria um subarray de arrayParrot com o número cartas distintas escolhidas pelo usuário
     let subArrayParrot = arrayParrot.slice(0,cartasNum/2);
 
@@ -64,9 +71,49 @@ function iniciaJogo(){
     subArrayParrot = subArrayParrot.sort(comparador);
 
     //Finalmente cria as cartas daquela instância do jogo
-    let contador;
-    for(contador = 0; contador < subArrayParrot.length; contador++){
+    for( let contador = 0; contador < subArrayParrot.length; contador++){
         CriaCarta(subArrayParrot[contador]);
+    }
+    liga_Relogio();
+}
+
+
+function encerraJogo(){  
+    //limpa todas as cartas da partida anterior
+    const cartas = document.querySelector('.cartas');
+    cartas.innerHTML = "";
+    
+    //reseta as variáveis de contagem da partida anterior
+    cartasNum = 0;
+    cartasCertasViradas = 0;
+    numJogadas = 0;
+    conta_Segundos = 0;
+    reseta_Relogio();
+}
+
+function venceuJogo (){
+    alert(`Você ganhou em ${numJogadas} jogadas e em ${conta_Segundos} segundos!`);
+    pergunta_Jogar_Novamente();
+}
+
+function pergunta_Jogar_Novamente (){
+    let resposta = null;
+    while(resposta !== 'sim' && resposta !== 'não'){
+        resposta = prompt("Deseja começar uma nova partida? \n(sim/não):");
+    }
+    encerraJogo();
+    if (resposta == "sim")
+        iniciaJogo();
+}
+
+function abandonar_Partida(){
+    let resposta = null;
+    while(resposta !== 'sim' && resposta !== 'não'){
+        resposta = prompt("Tem certeza que deseja encerrar a partida? \n(sim/não):");
+    }
+    if (resposta == "sim"){
+        encerraJogo();
+        pergunta_Jogar_Novamente();
     }
 }
 
@@ -94,10 +141,8 @@ function viraCarta(cartaClicada){
             else{
                 cartasCertasViradas += 2;
                 if (cartasCertasViradas == cartasNum){
-                    para_relogio();
-                    setTimeout(function(){ 
-                        alert(`Você ganhou em ${numJogadas} jogadas e em ${conta_Segundos} segundos!`);
-                        }, 1000);
+                    para_Relogio();
+                    setTimeout(venceuJogo, 1000);                 
                 }
             }
             cartaViradaAnterior = null;
@@ -109,8 +154,6 @@ function viraCarta(cartaClicada){
 }
 
 iniciaJogo();
-
-meu_Intervalo = setInterval(atualiza_Relogio, 1000);
 
 
 
