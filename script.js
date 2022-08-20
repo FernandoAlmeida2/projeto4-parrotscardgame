@@ -150,6 +150,20 @@ function abandonar_Partida(){
     }
 }
 
+function bloqueia_Cliques (){
+    const cartas = document.querySelectorAll('.carta');
+    for(let i = 0; i < cartas.length; i++){
+        cartas[i].setAttribute('onclick', '');
+    }
+}
+
+function habilita_Cliques (){
+    const cartas = document.querySelectorAll('.carta');
+    for(let i = 0; i < cartas.length; i++){
+        cartas[i].setAttribute('onclick', 'viraCarta(this)');
+    }
+}
+
 
 function viraCarta(cartaClicada){
 
@@ -162,36 +176,36 @@ function viraCarta(cartaClicada){
         faceVerso.classList.remove('flip');
         numJogadas ++;
 
-                  /* Quando duas cartas foram viradas no turno, verifica se elas são iguais: se sim, deixa-as viradas;
-                    caso contrário, desvira-as para a posição inicial; */
+                /* Quando duas cartas foram viradas no turno, verifica se elas são iguais: se sim, deixa-as viradas;
+                caso contrário, desvira-as para a posição inicial; */
 
         if(cartaViradaAnterior != null){
-
+            bloqueia_Cliques();
+            
             if (cartaClicada.isEqualNode(cartaViradaAnterior) == false){
-
                 const faceFrenteAnterior = cartaViradaAnterior.children[0];
                 const faceVersoAnterior = cartaViradaAnterior.children[1];
-                setTimeout(function(){ 
-                faceFrenteAnterior.classList.remove('flip');
-                faceVersoAnterior.classList.add('flip');
-                faceFrente.classList.remove('flip');
-                faceVerso.classList.add('flip');
-                }, 1000);
-
+                setTimeout(function()
+                { 
+                    faceFrenteAnterior.classList.remove('flip');
+                    faceVersoAnterior.classList.add('flip');
+                    faceFrente.classList.remove('flip');
+                    faceVerso.classList.add('flip');
+                    habilita_Cliques();
+                }
+                , 1000);
             }
 
             else{
-
                 cartasCertasViradas += 2;
-                if (cartasCertasViradas == cartasNum){
 
+                if (cartasCertasViradas == cartasNum){
                     para_Relogio();
                     setTimeout(venceuJogo, 1000);
 
                 }
-
+                habilita_Cliques();
             }
-
             cartaViradaAnterior = null;
         }
 
