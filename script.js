@@ -108,6 +108,7 @@ function encerraJogo(){
     cartasCertasViradas = 0;
     numJogadas = 0;
     conta_Segundos = 0;
+    para_Relogio();
     reseta_Relogio();
 }
 
